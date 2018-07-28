@@ -116,10 +116,10 @@ public class IProductServiceImpl implements IProductService {
         productDetailVO.setSubtitle(product.getSubtitle());
         productDetailVO.setPrice(product.getPrice());
         productDetailVO.setMainImage(product.getMainImage());
-        productDetailVO.setSubImages(product.getMainImage());
+        productDetailVO.setSubImages(product.getSubImages());
         productDetailVO.setCategoryId(product.getCategoryId());
         productDetailVO.setDetail(product.getDetail());
-        productDetailVO.setName(product.getDetail());
+        productDetailVO.setName(product.getName());
         productDetailVO.setStatus(product.getStatus());
         productDetailVO.setStock(product.getStock());
 
@@ -192,7 +192,7 @@ public class IProductServiceImpl implements IProductService {
         if(productName != null) {
             productName = new StringBuilder().append("%").append(productName).append("%").toString();
         }
-        List<Product> products = productMapper.selectByNameAndProductId(productName,productId);
+        List<Product> products = productMapper.selectByNameAndProductId(productName, productId);
         List<ProductListVO> productListVOS = Lists.newArrayList();
         for(Product p :products){
             ProductListVO productListVO = this.assembleProductListVO(p);

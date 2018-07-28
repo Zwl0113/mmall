@@ -43,7 +43,7 @@
       <if test="productId != null">
         and id = #{productId}
       </if>
-      <if test="productname != null">
+      <if test="productName != null">
         and name like #{productName}
       </if>
     </where>
