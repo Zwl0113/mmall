@@ -25,6 +25,12 @@ public class CategoryServiceImpl implements ICategoryService{
     @Autowired
     private CategoryMapper categoryMapper;
 
+    /**
+     * 添加分类
+     * @param categoryName
+     * @param parentId
+     * @return
+     */
     public ServerResponse addCategory(String categoryName,Integer parentId){
         if(StringUtils.isBlank(categoryName) || parentId == null){
             return ServerResponse.createByErrorMessage("添加品类参数错误");
@@ -41,6 +47,12 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createBySuccessMessage("添加品类失败");
     }
 
+    /**
+     * 更新分类
+     * @param categoryId
+     * @param categoryName
+     * @return
+     */
     public ServerResponse updateCategory(Integer categoryId,String categoryName){
         if(StringUtils.isBlank(categoryName) || categoryId == null){
             return ServerResponse.createByErrorMessage("更新品类参数错误");
@@ -55,6 +67,11 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createByErrorMessage("更新品类失败");
     }
 
+    /**
+     * 根据parentId获取所有分类
+     * @param categoryId
+     * @return
+     */
     public ServerResponse<List<Category>> getChildrenParallelCategory(Integer categoryId){
         List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
         if(CollectionUtils.isEmpty(categoryList)){
@@ -63,7 +80,12 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createBySuccess(categoryList);
     }
 
-    public ServerResponse selectCategoryAndChildrenById(Integer categoryId){
+    /**
+     * 根据panrentId获取所有分类及其子分类
+     * @param categoryId
+     * @return
+     */
+    public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId){
         Set<Category> categorySet = Sets.newHashSet();
         findChildCategory(categorySet, categoryId);
         List<Integer> categoryIdList = Lists.newArrayList();
@@ -75,7 +97,12 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createBySuccess(categoryIdList);
     }
 
-    //获取分类及其子分类
+    /**
+     * 递归查询子分类
+     * @param categorySet
+     * @param categoryId
+     * @return
+     */
     private Set<Category> findChildCategory(Set<Category> categorySet,Integer categoryId){
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         if(category != null){
