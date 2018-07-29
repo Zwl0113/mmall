@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service("iFileService")
-public class IFileServiceImpl implements IFileService {
+public class FileServiceImpl implements IFileService {
 
-    private Logger logger = LoggerFactory.getLogger(IFileServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     public String upload(MultipartFile file,String path){
         String originalFilename = file.getOriginalFilename();
