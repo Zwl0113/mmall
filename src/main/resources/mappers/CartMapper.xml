@@ -35,7 +35,7 @@
     where user_id = #{userId}
   </select>
 
-  <select id="selectCartProductCheckedStatusByUserId" >
+  <select id="selectCartProductCheckedStatusByUserId" resultType="int" parameterType="int">
     select
     count(1)
     from mmall_cart
@@ -44,7 +44,7 @@
   </select>
 
   <select id="selectCartProductCount" resultType="int" parameterType="int">
-    select IFNULL(sum(quantity),0) as count from mmall_cart where userId = #{userId}
+    select IFNULL(sum(quantity),0) as count from mmall_cart where user_id = #{userId}
 
   </select>
 
@@ -55,10 +55,10 @@
 
   <delete id="deleteByUserIdProductIds" parameterType="map">
     delete from mmall_cart
-    where userId = #{userId}
+    where user_id = #{userId}
     <if test="productIdList != null">
-      and productId in
-      <foreach collection="productIdList" item="itme" open="{" separator="," close="}" index="index">
+      and product_id in
+      <foreach collection="productIdList" item="item" open="(" separator="," close=")" index="index">
         #{item}
       </foreach>
     </if>
@@ -140,7 +140,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        now(),
+        update_time = now(),
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

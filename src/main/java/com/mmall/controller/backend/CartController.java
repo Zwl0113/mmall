@@ -21,12 +21,12 @@ public class CartController {
 
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse list(HttpSession session,Integer productId){
+    public ServerResponse list(HttpSession session){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.list(productId);
+        return iCartService.list(user.getId());
     }
 
     @RequestMapping("add.do")
@@ -86,7 +86,7 @@ public class CartController {
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.selectOrUnSelect(user.getId(),productId,Const.Cart.UN_CHECKED);
+        return iCartService.selectOrUnSelect(user.getId(),productId,Const.Cart.CHECKED);
     }
 
 
