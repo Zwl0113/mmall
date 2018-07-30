@@ -141,7 +141,7 @@ public class CartServiceImpl implements ICartService{
     private CartVO getCartVOLimit(Integer userId){
         CartVO cartVO = new CartVO();
         BigDecimal cartTotalPrice = new BigDecimal("0");
-        List<Cart> carts = cartMapper.selectCartByUserID(userId);
+        List<Cart> carts = cartMapper.selectCartByUserId(userId);
         List<CartProductVO> cartProductVOS = Lists.newArrayList();
         for(Cart c :carts){
             CartProductVO cartProductVO = new CartProductVO();
