@@ -26,6 +26,15 @@
     from mmall_order_item
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getByOrderNoUserId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List">
+    </include>
+    from mmall_order_item
+    where order_no = #{orderNo}
+    and user_id = #{userId}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mmall_order_item
     where id = #{id,jdbcType=INTEGER}
