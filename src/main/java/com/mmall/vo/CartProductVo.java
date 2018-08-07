@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * 结合了产品和购物车的抽象对象
  */
 
-public class CartProductVO {
+public class CartProductVo {
 
     private Integer id;
     private Integer userId;

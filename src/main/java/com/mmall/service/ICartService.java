@@ -1,18 +1,18 @@
 package com.mmall.service;
 
 import com.mmall.common.ServerResponse;
-import com.mmall.vo.CartVO;
+import com.mmall.vo.CartVo;
 
 public interface ICartService {
-    ServerResponse<CartVO> add(Integer productId, Integer userId, Integer count);
+    ServerResponse<CartVo> add(Integer productId, Integer userId, Integer count);
 
-    ServerResponse<CartVO> update(Integer productId,Integer userId,Integer count);
+    ServerResponse<CartVo> update(Integer productId, Integer userId, Integer count);
 
-    ServerResponse<CartVO> deleteProduct(Integer userId,String productIds);
+    ServerResponse<CartVo> deleteProduct(Integer userId, String productIds);
 
-    ServerResponse<CartVO> list(Integer userId);
+    ServerResponse<CartVo> list(Integer userId);
 
-    ServerResponse<CartVO> selectOrUnSelect(Integer userId,Integer productId,Integer checked);
+    ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked);
 
     ServerResponse<Integer> getCartProductCount(Integer userId);
 }

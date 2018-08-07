@@ -12,9 +12,8 @@ import com.mmall.pojo.Product;
 import com.mmall.service.ICartService;
 import com.mmall.util.BigDecimalUtil;
 import com.mmall.util.PropertiesUtil;
-import com.mmall.vo.CartProductVO;
-import com.mmall.vo.CartVO;
-import net.sf.jsqlparser.schema.Server;
+import com.mmall.vo.CartProductVo;
+import com.mmall.vo.CartVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -38,7 +37,7 @@ public class CartServiceImpl implements ICartService{
      * @param count
      * @return
      */
-    public ServerResponse<CartVO> add(Integer productId,Integer userId,Integer count){
+    public ServerResponse<CartVo> add(Integer productId, Integer userId, Integer count){
         if(productId == null || count == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
@@ -68,7 +67,7 @@ public class CartServiceImpl implements ICartService{
      * @param count
      * @return
      */
-    public ServerResponse<CartVO> update(Integer productId,Integer userId,Integer count){
+    public ServerResponse<CartVo> update(Integer productId, Integer userId, Integer count){
         if(productId == null || count == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
@@ -92,7 +91,7 @@ public class CartServiceImpl implements ICartService{
      * @param productIds
      * @return
      */
-    public ServerResponse<CartVO> deleteProduct(Integer userId,String productIds){
+    public ServerResponse<CartVo> deleteProduct(Integer userId, String productIds){
         List<String> productIdList = Splitter.on(",").splitToList(productIds);
         if(CollectionUtils.isEmpty(productIdList)){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -111,9 +110,9 @@ public class CartServiceImpl implements ICartService{
      * @param userId
      * @return
      */
-    public ServerResponse<CartVO> list(Integer userId){
-        CartVO cartVO = this.getCartVOLimit(userId);
-        return ServerResponse.createBySuccess(cartVO);
+    public ServerResponse<CartVo> list(Integer userId){
+        CartVo cartVo = this.getCartVOLimit(userId);
+        return ServerResponse.createBySuccess(cartVo);
     }
 
 
@@ -124,7 +123,7 @@ public class CartServiceImpl implements ICartService{
      * @param checked
      * @return
      */
-    public ServerResponse<CartVO> selectOrUnSelect(Integer userId,Integer productId,Integer checked){
+    public ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked){
         cartMapper.checkedOrUncheckedProduct(userId,productId,checked);
         return this.list(userId);
     }
@@ -138,54 +137,54 @@ public class CartServiceImpl implements ICartService{
     }
 
 
-    private CartVO getCartVOLimit(Integer userId){
-        CartVO cartVO = new CartVO();
+    private CartVo getCartVOLimit(Integer userId){
+        CartVo cartVo = new CartVo();
         BigDecimal cartTotalPrice = new BigDecimal("0");
         List<Cart> carts = cartMapper.selectCartByUserId(userId);
-        List<CartProductVO> cartProductVOS = Lists.newArrayList();
+        List<CartProductVo> cartProductVos = Lists.newArrayList();
         for(Cart c :carts){
-            CartProductVO cartProductVO = new CartProductVO();
-            cartProductVO.setId(c.getId());
-            cartProductVO.setProductId(c.getProductId());
-            cartProductVO.setUserId(c.getUserId());
+            CartProductVo cartProductVo = new CartProductVo();
+            cartProductVo.setId(c.getId());
+            cartProductVo.setProductId(c.getProductId());
+            cartProductVo.setUserId(c.getUserId());
             Product product = productMapper.selectByPrimaryKey(c.getProductId());
             if(product != null) {
-                cartProductVO.setProductMainImage(product.getMainImage());
-                cartProductVO.setProductName(product.getName());
-                cartProductVO.setProductStatus(product.getStatus());
-                cartProductVO.setProductSubtitle(product.getSubtitle());
-                cartProductVO.setProductStock(product.getStock());
-                cartProductVO.setProductPrice(product.getPrice());
+                cartProductVo.setProductMainImage(product.getMainImage());
+                cartProductVo.setProductName(product.getName());
+                cartProductVo.setProductStatus(product.getStatus());
+                cartProductVo.setProductSubtitle(product.getSubtitle());
+                cartProductVo.setProductStock(product.getStock());
+                cartProductVo.setProductPrice(product.getPrice());
                 int buyLimitCount = 0;
                 if (product.getStock() >= c.getQuantity()) {
                     //库存充足
                     buyLimitCount = c.getQuantity();
-                    cartProductVO.setLimitQuantity(Const.Cart.LIMIT_NUM_SUCCESS);
+                    cartProductVo.setLimitQuantity(Const.Cart.LIMIT_NUM_SUCCESS);
                 } else {
                     buyLimitCount = product.getStock();
-                    cartProductVO.setLimitQuantity(Const.Cart.LIMIT_NUM_FAIL);
+                    cartProductVo.setLimitQuantity(Const.Cart.LIMIT_NUM_FAIL);
                     //库存不足,更新购物车的库存记录
                     Cart newCart = new Cart();
                     newCart.setId(c.getId());
                     newCart.setQuantity(buyLimitCount);
                     cartMapper.updateByPrimaryKeySelective(newCart);
                 }
-                cartProductVO.setQuantity(buyLimitCount);
+                cartProductVo.setQuantity(buyLimitCount);
                 //计算总价
-                cartProductVO.setProductTotalPrice(BigDecimalUtil.mul(product.getPrice().doubleValue(), cartProductVO.getQuantity()));
-                cartProductVO.setProductChecked(c.getChecked());
+                cartProductVo.setProductTotalPrice(BigDecimalUtil.mul(product.getPrice().doubleValue(), cartProductVo.getQuantity()));
+                cartProductVo.setProductChecked(c.getChecked());
             }
             if(c.getChecked() == Const.Cart.CHECKED){
                 //选中
-                cartTotalPrice = BigDecimalUtil.add(cartTotalPrice.doubleValue(),cartProductVO.getProductTotalPrice().doubleValue());
+                cartTotalPrice = BigDecimalUtil.add(cartTotalPrice.doubleValue(), cartProductVo.getProductTotalPrice().doubleValue());
             }
-            cartProductVOS.add(cartProductVO);
+            cartProductVos.add(cartProductVo);
         }
-        cartVO.setCartProductVOList(cartProductVOS);
-        cartVO.setCartTotalPrice(cartTotalPrice);
-        cartVO.setAllCecked(this.getAllCheckedStatus(userId));
-        cartVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
-        return cartVO;
+        cartVo.setCartProductVoList(cartProductVos);
+        cartVo.setCartTotalPrice(cartTotalPrice);
+        cartVo.setAllCecked(this.getAllCheckedStatus(userId));
+        cartVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        return cartVo;
     }
 
     private boolean getAllCheckedStatus(Integer userId){
