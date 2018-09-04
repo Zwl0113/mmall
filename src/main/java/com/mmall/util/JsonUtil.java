@@ -65,17 +65,17 @@ public class JsonUtil {
         }
     }
 
-    public static <T> T string2Obj(String str, TypeReference<T> typeReference){
-        if(StringUtils.isEmpty(str) || typeReference == null){
-            return null;
-        }
-        try {
-            return typeReference.getType().equals(String.class) ? (T)str : objectMapper.readValue(str,typeReference);
-        } catch (IOException e) {
-            log.warn("Parse String to Object error",e);
-            return null;
-        }
-    }
+//    public static <T> T string2Obj(String str, TypeReference<T> typeReference){
+//        if(StringUtils.isEmpty(str) || typeReference == null){
+//            return null;
+//        }
+//        try {
+//            return typeReference.getType().equals(String.class) ? (T)str : objectMapper.readValue(str,typeReference);
+//        } catch (IOException e) {
+//            log.warn("Parse String to Object error",e);
+//            return null;
+//        }
+//    }
 
     public static <T> T string2Obj(String str,Class<?> collectionClass,Class<?>... elementClasses ){
         JavaType javaType = objectMapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
