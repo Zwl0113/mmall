@@ -1,4 +1,4 @@
-package com.mmall.pojo;
+package com.mmall.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,26 +11,21 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class PayInfo {
     private Integer id;
 
-    private String username;
+    private Integer userId;
 
-    private String password;
+    private Long orderNo;
 
-    private String email;
+    private Integer payPlatform;
 
-    private String phone;
+    private String platformNumber;
 
-    private String question;
-
-    private String answer;
-
-    private Integer role;
+    private String platformStatus;
 
     private Date createTime;
 
     private Date updateTime;
-
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mmall.dao.ShippingMapper" >
-  <resultMap id="BaseResultMap" type="com.mmall.pojo.Shipping" >
+  <resultMap id="BaseResultMap" type="com.mmall.dto.Shipping" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -50,7 +50,7 @@
     where id = #{shippingId}
     and user_id = #{userId}
   </delete>
-  <insert id="insert" parameterType="com.mmall.pojo.Shipping" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.mmall.dto.Shipping" useGeneratedKeys="true" keyProperty="id">
     insert into mmall_shipping (id, user_id, receiver_name, 
       receiver_phone, receiver_mobile, receiver_province, 
       receiver_city, receiver_district, receiver_address, 
@@ -62,7 +62,7 @@
       #{receiverZip,jdbcType=VARCHAR}, now(), now()
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mmall.pojo.Shipping" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.mmall.dto.Shipping" useGeneratedKeys="true" keyProperty="id">
     insert into mmall_shipping
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -141,7 +141,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.Shipping" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.dto.Shipping" >
     update mmall_shipping
     <set >
       <if test="userId != null" >
@@ -180,7 +180,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Shipping" >
+  <update id="updateByPrimaryKey" parameterType="com.mmall.dto.Shipping" >
     update mmall_shipping
     set user_id = #{userId,jdbcType=INTEGER},
       receiver_name = #{receiverName,jdbcType=VARCHAR},
@@ -196,7 +196,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByShipping" parameterType="com.mmall.pojo.Shipping">
+  <update id="updateByShipping" parameterType="com.mmall.dto.Shipping">
     update mmall_shipping
     set
       receiver_name = #{receiverName,jdbcType=VARCHAR},

@@ -1,28 +1,24 @@
-package com.mmall.pojo;
+package com.mmall.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PayInfo {
+public class Cart {
     private Integer id;
 
     private Integer userId;
 
-    private Long orderNo;
+    private Integer productId;
 
-    private Integer payPlatform;
+    private Integer quantity;
 
-    private String platformNumber;
-
-    private String platformStatus;
+    private Integer checked;
 
     private Date createTime;
 

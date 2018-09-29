@@ -1,6 +1,6 @@
 package com.mmall.dao;
 
-import com.mmall.pojo.Product;
+import com.mmall.dto.Product;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

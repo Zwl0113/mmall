@@ -1,7 +1,7 @@
 package com.mmall.service;
 
 import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Category;
+import com.mmall.dto.Category;
 
 import java.util.List;
 

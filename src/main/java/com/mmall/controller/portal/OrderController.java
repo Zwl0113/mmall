@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 import com.mmall.common.Const;
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
-import com.mmall.pojo.User;
+import com.mmall.dto.User;
 import com.mmall.service.IOrderService;
 import lombok.extern.slf4j.Slf4j;
 

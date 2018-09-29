@@ -1,7 +1,6 @@
 package com.mmall.dao;
 
-import com.mmall.pojo.Order;
-import com.mmall.pojo.OrderItem;
+import com.mmall.dto.Order;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

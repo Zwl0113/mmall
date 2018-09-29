@@ -2,10 +2,8 @@ package com.mmall.service;
 
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Order;
 import com.mmall.vo.OrderVo;
 
-import java.util.List;
 import java.util.Map;
 
 public interface IOrderService {

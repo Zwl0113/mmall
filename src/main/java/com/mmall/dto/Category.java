@@ -1,4 +1,4 @@
-package com.mmall.pojo;
+package com.mmall.dto;
 
 import lombok.*;
 

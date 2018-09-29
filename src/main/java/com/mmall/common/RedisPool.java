@@ -35,7 +35,6 @@ public class RedisPool {
         return jedisPool.getResource();
     }
 
-
     public static void returnBrokenJedis(Jedis jedis){
         jedisPool.returnBrokenResource(jedis);
     }
@@ -51,7 +50,7 @@ public class RedisPool {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        jedis.set("ruiren","ruiren");
+        jedis.set("test","huiren");
         RedisPool.returnResource(jedis);
         System.out.println("program is end");
     }

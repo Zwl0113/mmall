@@ -1,8 +1,7 @@
 package com.mmall.dao;
 
-import com.mmall.pojo.Shipping;
+import com.mmall.dto.Shipping;
 import org.apache.ibatis.annotations.Param;
-import sun.security.provider.SHA;
 
 import java.util.List;
 
