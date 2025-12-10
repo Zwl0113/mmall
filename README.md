@@ -10,3 +10,4 @@ database：使用mysql统一管理数据，redis实现缓存
 没有流控等防止突增流量的支持
 
 用法：该项目为学习参考项目，直接克隆到本地编译器即可，jdk版本1.8，可使用tomcat，jetty等容器
+xz123454321o admire-nov
